@@ -1,16 +1,23 @@
-from utils import hash_file
+from utils import hash_file, sign_file
 
 
 class DreamCoinsBlock:
 
-    def __init__(self, filename, transaction):
-        self.filename = filename
+    def __init__(self, last_filename, new_filename, transaction):
+        self.last_filename = last_filename
+        self.new_filename = new_filename
         self.transaction = transaction
 
     def add_block(self):
+        with open(self.last_filename, "r") as file:
+            for last_line in file:
+                pass
+            print(last_line)
+
         # f = open(self.filename, "w")
         # f.write(self.transaction)
-        hash_file(self.filename, self.transaction)
+        hash_file(self.new_filename, self.transaction, last_line)
+        # sign_file(self.new_filename)
         # sign_file(self.filename)
 
     # transaction = "Anna sends 3 DC to Mike"
@@ -24,7 +31,7 @@ t4 = "Daniel sends 0.3 DC to Anna"
 t5 = "Mike sends 1 DC to Charlie"
 t6 = "Mike sends 5.4 DC to Daniel"
 
-initial_block = DreamCoinsBlock("T1", t2)
+initial_block = DreamCoinsBlock("T1", "T2", t1)
 initial_block.add_block()
 
 # second_block = DreamCoinsBlock("T1",t2)

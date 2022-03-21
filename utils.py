@@ -8,17 +8,13 @@ home_fs = open_fs(".")
 
 
 # Hashes a file and writes the hashed string in the same file
-def hash_file(filename, transaction):
-    data = open(filename)
-    data_transactions = data.read()
-    print(data_transactions)
-    hashed_transaction = hashlib.sha256(transaction.encode()).hexdigest()
-    print(hashed_transaction)
-    hashed_data = open(filename, "a")
-    hashed_data.write("\n"+"||| Transaction : " + transaction+" ||| Hash : " + hashed_transaction)
-    # print(data.read())
-
-
+def hash_file(filename, transaction, last_line):
+    data = open(filename, "w+")
+    data.write("Last " + last_line + "\n"+"Transaction: " + transaction)
+    with open(filename, "r") as file:
+        to_hash = file.read()
+        hashed_file = hashlib.sha256(to_hash.encode()).hexdigest()
+    data.write("\n" + "Hash : " + hashed_file)
 
 
 # Signs a file using gpg, creates a ".asc" file and prints the status
