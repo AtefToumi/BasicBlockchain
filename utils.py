@@ -23,7 +23,7 @@ def hash_file(filename):
         file.write(str(hash))  # Get the hexadecimal digest of the hash
 
 
-def hash_file_V2(filename):
+def hash_file_v2(filename):
     with open(filename, "r") as f:
         data = f.read()
         hashed_data = hashlib.sha256(data.encode()).hexdigest()
@@ -32,6 +32,7 @@ def hash_file_V2(filename):
         # f.write(hashed_data)
 
 
+# Looking up the index where the payload stops in the file and reading from line 1 to the index to get the payload back
 def get_payload(filename):
     lookup = '-----BEGIN PGP SIGNED MESSAGE-----'
     with open(filename, "r") as file:
@@ -47,22 +48,21 @@ def get_payload(filename):
         # return transactions
 
 
-# Signs a file using gpg, creates a ".asc" file and prints the status
 def sign_file(filename, transaction, prev_block):
-    with open(prev_block) as f:
+    with open(prev_block) as f:  # Reads the last line from the prev_block which is the prev_hash
         prev_hash = f.readlines()[-1]
         f.close()
-    with open(prev_block) as file:
+    with open(prev_block) as file:  # Get the Payload from the prev_block and append to it the new transactions
         payload = get_payload(prev_block)
         payload.append(transaction)
         print(payload)
 
-    with open(filename, "w+") as file:
+    with open(filename, "w+") as file:  # Write the new Payload to the new Block/File
         file.write(prev_hash + "\n")
         for i in payload:
             file.write(i)
         # file.write(prev_hash + "\n" + transaction)
-        signed_data = gpg.sign_file(file, passphrase="thisisformybachelorarbeit")
+        signed_data = gpg.sign_file(file, passphrase="thisisformybachelorarbeit")  # Signing prev_hash + new Payload
         file.write("\n" + str(signed_data))
 
 
@@ -77,29 +77,36 @@ def verify_signature(filename):
         print("Signature is invalid")
 
 
+# Computes hash of a string
 def compute_hash(data):
     return hashlib.sha256(data.encode()).hexdigest()
 
 
+# Verify the hash of a given Block/File
 def verify_block(filename):
-    with open(filename) as f:
+    with open(filename) as f:  # Reading all the block except the last line;which contains the hash of the block
         data = f.readlines()[0:-1]
         to_hash = ""
-        to_hash = to_hash.join(data)
+        to_hash = to_hash.join(
+            data)  # Readlines returns an array of strings, join them to get the whole string back
 
     with open(filename) as file:
-        prev_hash = file.readlines()[-1]
-        computed_hash = compute_hash(to_hash)
-        if prev_hash == computed_hash:
+        prev_hash = file.readlines()[-1]  # Reads the Hash put in the Block
+        computed_hash = compute_hash(to_hash)  # Compute the Hash of the Block
+        if prev_hash == computed_hash:  # Check if computed hash corresponds to the hash put in the Block
             return True
         else:
             return False
 
 
+# Verifies integrity of the Blockchain
+# Looping from the last block to the first one
+# Computing each Hash of a Block and comparing it to the Hash put at the end of the Block
+# TODO : verifying signature for each block
 def verify_blockchain(fileslist):
     index = len(fileslist) - 1
     print(index)
-    while (verify_block(fileslist[index]) and index >= 0):
+    while verify_block(fileslist[index]) and index >= 0:
         print("Block number " + str(index) + " is valid")
         index -= 1
         print(verify_block(fileslist[index]))

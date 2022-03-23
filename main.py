@@ -1,4 +1,4 @@
-from utils import hash_file_V2,sign_file,verify_signature
+from utils import hash_file_v2,sign_file,verify_signature
 
 
 class Block:
@@ -11,7 +11,7 @@ class Block:
     def add_block(self):
 
         sign_file(self.new_filename, self.transaction,self.last_filename)
-        hash_file_V2(self.new_filename)
+        hash_file_v2(self.new_filename)
 
 
 
