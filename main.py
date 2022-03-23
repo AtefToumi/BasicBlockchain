@@ -1,7 +1,7 @@
 from utils import hash_file_V2,sign_file,verify_signature
 
 
-class DreamCoinsBlock:
+class Block:
 
     def __init__(self, last_filename, new_filename, transaction):
         self.last_filename = last_filename
@@ -24,7 +24,7 @@ t6 = "Mike sends 5.4 DC to Daniel"
 #
 
 # hash_file("T1")
-initial_block = DreamCoinsBlock("T1", "T2", t2)
+initial_block = Block("T1", "T2", t2)
 initial_block.add_block()
 # sign_file("T1")
 # verify_signature("T1")

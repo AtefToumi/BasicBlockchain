@@ -77,17 +77,39 @@ def verify_signature(filename):
         print("Signature is invalid")
 
 
-def compute_hash(filename):
-    with open(filename, "r") as file:
-        to_hash = file.read()
-        return hashlib.sha256(to_hash.encode()).hexdigest()
+def compute_hash(data):
+    return hashlib.sha256(data.encode()).hexdigest()
 
 
-def verify_previous_block(filename):
+def verify_block(filename):
     with open(filename) as f:
-        to_hash = f.read()[0:-1]
-        print(to_hash)
-verify_previous_block("T1")
+        data = f.readlines()[0:-1]
+        to_hash = ""
+        to_hash = to_hash.join(data)
+
+    with open(filename) as file:
+        prev_hash = file.readlines()[-1]
+        computed_hash = compute_hash(to_hash)
+        if prev_hash == computed_hash:
+            return True
+        else:
+            return False
+
+
+def verify_blockchain(fileslist):
+    index = len(fileslist) - 1
+    print(index)
+    while (verify_block(fileslist[index]) and index >= 0):
+        print("Block number " + str(index) + " is valid")
+        index -= 1
+        print(verify_block(fileslist[index]))
+    if verify_block(fileslist[index]):
+        print("The Blockchain is valid")
+    else:
+        print("Block number " + str(index) + " is invalid")
+
+
+verify_blockchain(["T0", "T1", "T2"])
 # verify_previous_block("T2")
 
 # sign_file("T1")
