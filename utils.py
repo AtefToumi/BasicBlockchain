@@ -94,10 +94,11 @@ def verify_block(filename):
         prev_hash = file.readlines()[-1]  # Reads the Hash put in the Block
         computed_hash = compute_hash(to_hash)  # Compute the Hash of the Block
         if prev_hash == computed_hash:  # Check if computed hash corresponds to the hash put in the Block
-            return True
+            # return True
+            print("hash is valid")
         else:
-            return False
-
+            # return False
+            print("hash is invalid")
 
 # Verifies integrity of the Blockchain
 # Looping from the last block to the first one
@@ -115,8 +116,8 @@ def verify_blockchain(fileslist):
     else:
         print("Block number " + str(index) + " is invalid")
 
-
-verify_blockchain(["T0", "T1", "T2"])
+verify_block("T2")
+# verify_blockchain(["T0", "T1", "T2"])
 # verify_previous_block("T2")
 
 # sign_file("T1")

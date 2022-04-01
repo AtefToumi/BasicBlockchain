@@ -1,4 +1,6 @@
 from utils import hash_file_v2,sign_file,verify_signature
+import sys
+
 
 
 class Block:
@@ -24,7 +26,7 @@ t6 = "Mike sends 5.4 DC to Daniel"
 #
 
 # hash_file("T1")
-initial_block = Block("T1", "T2", t2)
+initial_block = Block(str(sys.argv[1]), str(sys.argv[2]), sys.argv[3])
 initial_block.add_block()
 # sign_file("T1")
 # verify_signature("T1")
