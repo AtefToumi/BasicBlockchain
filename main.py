@@ -1,6 +1,8 @@
-from utils import hash_file_v2,sign_file,verify_signature
 import sys
 
+from hash import hash_file_v2
+from mine import mine
+from sign_block import sign_file
 
 
 class Block:
@@ -11,10 +13,9 @@ class Block:
         self.transaction = transaction
 
     def add_block(self):
-
-        sign_file(self.new_filename, self.transaction,self.last_filename)
+        sign_file(self.new_filename, self.transaction, self.last_filename)
         hash_file_v2(self.new_filename)
-
+        mine(self.last_filename)
 
 
 t1 = "Anna sends 2 DC to Mike"
@@ -30,5 +31,3 @@ initial_block = Block(str(sys.argv[1]), str(sys.argv[2]), sys.argv[3])
 initial_block.add_block()
 # sign_file("T1")
 # verify_signature("T1")
-
-
