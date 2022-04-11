@@ -17,6 +17,6 @@ def mine(prev_block):
         attempt = payload + random_string
         solution = hashlib.sha256(attempt.encode()).hexdigest()
         if solution.startswith("0000"):
-            print(solution)
+            print("proof of work with 4 zeros sucessfully found : " + solution)
             Found = True
 

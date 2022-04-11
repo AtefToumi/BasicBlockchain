@@ -1,5 +1,5 @@
-
-
-
 class User:
-    pass
+
+    def __init__(self, id, passphrase):
+        self.id = id
+        self.passphrase = passphrase

@@ -29,4 +29,5 @@ def hash_file_v2(filename):
         hashed_data = hashlib.sha256(data.encode()).hexdigest()
     with open(filename, "a") as file:
         file.write(hashed_data)
+        print("the hash of the block is : " + hashed_data)
         # f.write(hashed_data)
