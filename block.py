@@ -33,11 +33,12 @@ t4 = "Daniel sends 0.3 DC to Anna"
 t5 = "Mike sends 1 DC to Charlie"
 t6 = "Mike sends 5.4 DC to Daniel"
 #
-new_transaction = input("Enter the new transaction details : ")
-user_id = input("Enter your id : ")
-user_passphrase = input("Enter your passphrase : ")
-# hash_file("T1")
-initial_block = Block(str(sys.argv[1]), str(sys.argv[2]), new_transaction)
-initial_block.add_block(User(user_id, user_passphrase))
-# sign_file("T1")
-# verify_signature("T1")
+# last_block = input("Please enter the last Block in the Blockchain : ")
+# new_block = input("Please enter the new Block's name : ")
+# transaction = input("Enter the transaction details : ")
+# user_id = input("Enter your id : ")
+# user_passphrase = input("Enter your passphrase : ")
+
+# block = Block(last_block, new_block, transaction)
+# block.add_block(User(user_id, user_passphrase))
+
